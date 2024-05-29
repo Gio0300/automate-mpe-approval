@@ -44,7 +44,7 @@ The following diagram illustrates the steps associated with approving an MPE. Pa
 
 Something to note in the process above, not once did we interact with the PE directly. I am specifically calling this out to point out the managed nature of the MPEs. We interact with the MPE at the PaaS resource and we can interact with the PEC at the target resource, but we never interact with the PE directly.
 
-Permissions to approve PEC when using Bicep
+## Permissions to approve PEC when using Bicep
 
 As you've seen we don't really approve MPEs, we approve the corresponding PECs. The story around the permissions needed to approve a PEC in the context of a deployment pipeline written in Bicep is a bit nuance. I assume that the security principal used to operate the pipeline has enough permissions to create the MPEs. The catch however is that we need a couple of loops and custom scripting to get the status of the MPEs and eventually approve the PEC. If you are using Bicep this means we need to use a [deployment script](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template) if we want to approve the PECs in line with the rest of the resources. One reason to this would be if you want to deploy MPEs and approve the corresponding PEC before you deploy a Stream Analytics job that depends on the MPEs. Deploying an Azure Data Factory Pipelines would be similar use case.
 

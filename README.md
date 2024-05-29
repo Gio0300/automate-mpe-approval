@@ -49,10 +49,10 @@ Permissions to approve PEC when using Bicep
 As you've seen we don't really approve MPEs, we approve the corresponding PECs. The story around the permissions needed to approve a PEC in the context of a deployment pipeline written in Bicep is a bit nuance. I assume that the security principal used to operate the pipeline has enough permissions to create the MPEs. The catch however is that we need a couple of loops and custom scripting to get the status of the MPEs and eventually approve the PEC. If you are using Bicep this means we need to use a [deployment script](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template) if we want to approve the PECs in line with the rest of the resources. One reason to this would be if you want to deploy MPEs and approve the corresponding PEC before you deploy a Stream Analytics job that depends on the MPEs. Deploying an Azure Data Factory Pipelines would be similar use case.
 
 Deployment scripts require a user managed identity to operate. If we follow the principal of least privilege then our custom deployment script may not use the same security principal that is operating the deployment pipeline. This means we need to provision a dedicated user managed identity with the appropriate permissions. A discussion on RBAC an particularly RBAC scopes is out of scope, so I will summarize the permissions needed in plain language:
-    1. Read permissions on PaaS resource in order to query the status of the MPEs
-    2. Read permission on the target resource in order to query the status of the PECs
-    3. '*…/privateEndpointConnections/write*' permission on target resource.
-        a. For some examples of these write permission see the accompanying sample code.
+1. Read permissions on PaaS resource in order to query the status of the MPEs
+2. Read permission on the target resource in order to query the status of the PECs
+3. '*…/privateEndpointConnections/write*' permission on target resource.
+    1. For some examples of these write permission see the accompanying sample code.
 
 ## Sample code
 
